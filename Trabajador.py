@@ -1,3 +1,4 @@
+import random
 class Trabajador:
 
     """
@@ -10,17 +11,14 @@ class Trabajador:
     String ZonasVisitadas es una lista de strings con las zonas visitadas por la hebra
     int RondasTrabajadas contador de rondas trabajadas por la hebra
 
-
-    Se supone que para que por ejemplo Resistencia sea privado la convencion es __Resistencia, pero tomare todos como privado
-    los tratare como tal, ya que en este lenguaje tampoco existe el privado
     """
 
-    def __init__(self, Resistencia , Mochila, Estado):
+    def __init__(self, Resistencia , Mochila):
        
         #condiciones iniciales
         self.Resistencia = Resistencia 
         self.Mochila = Mochila
-        self.Estado = Estado
+        self.Estado = "Activo"
 
         # Historial de la hebra
         self.CristalesExtraidosTotales = 0
@@ -37,14 +35,70 @@ class Trabajador:
     def GetEstado(self):
         return self.Estado
     
-    def Accion(self, Resistencia):
-        self.Resistencia -= Resistencia
-        self.RondasTrabajadas += 1
-        
+    def RecargarResistencia(self, aunmento):
+        if (self.Resistencia + aunmento >= 100):
+            self.Resistencia = 100
+        else:
+            self.Resistencia += aunmento
 
-    def Recolectar(self, CristalesRecolectados):
+    def AunmentarCristal(self, cristales):
+        if (self.Mochila + cristales >= 10):
+            self.Mochila = 10
+        else:
+            self.Mochila += cristales
+    
+    def Accion(self, Cristales_A_Recolectar):
+        if (Cristales_A_Recolectar == 1):
+            self.Resistencia -= 5
+        elif(Cristales_A_Recolectar):
+            self.Resistencia -= 12
+        else:
+            self.Resistencia -= 20
+        return Cristales_A_Recolectar
+    
+    # Los cristales recolectados se retornan para quitarlos de la zona
+    def Recolectar(self, Cristales_A_Recolectar):
+
+        CristalesRecolectados = self.Accion(self, Cristales_A_Recolectar)
         
         self.Mochila += CristalesRecolectados
+        self.CristalesExtraidosTotales += CristalesRecolectados
+        return CristalesRecolectados
 
-    def GetEstado(self):
-        return self.Estado
+    def Exposicion(self, Toxicidad, TrabajadoresEnZona):
+        return Toxicidad/TrabajadoresEnZona
+
+    # Si retorna 1, se comparte, caso contrario no se puede
+    def compartir(self):
+        if (self.Mochila >= 3):
+            self.Mochila -= 3
+            return 1
+        else:
+            return 0
+    
+    def recibir(self, Aceptado):
+        if (Aceptado):
+            self.AunmentarCristal(self, 3)
+        else:
+            pass
+    
+    def CambiarEstado(self):
+        if(self.Resistencia > 20):
+            pass
+        elif(0 < self and self <= 20):
+            self.Estado = "Agotado"
+        else:
+            self.Estado = "Intoxicado"
+
+    # Si retorna 1 significa que tiene que abandonar una ronda la pega, si retorna 0 sigue trabajando
+    def Agotado(self):
+        if(self.Estado == "Agotado"):
+            self.RecargarResistencia(self,30)
+            return 1
+        return 0
+    
+    # Si retorna 1 matar hebra si retorna 0 sigue trabajando
+    def Intoxicado(self):
+        if(self.Estado == "Intoxicado"):
+            return 1
+        return 0
