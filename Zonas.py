@@ -19,7 +19,7 @@ class Zonas:
     
     # Si retorna 0 no puedes agregar un trabajador
     def UnirTrabajador(self):
-        if(self.Trabajadores == 8):
+        if(self.Trabajadores >= 8):
             return 0
         self.Trabajadores += 1
         return 1

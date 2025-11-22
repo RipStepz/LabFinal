@@ -24,7 +24,6 @@ class Trabajador:
         self.ZonasVisitadas = ()
         self.RondasTrabajadas = 0
 
-
     def GetResistencia(self):
         return self.Resistencia
     
@@ -78,23 +77,23 @@ class Trabajador:
             self.AunmentarCristal(self, 3)
         else:
             pass
-    
+    #llamar cada ronda
     def CambiarEstado(self):
         if(self.Resistencia > 20):
-            pass
+            self.Resistencia = "Activo"
         elif(0 < self and self <= 20):
             self.Estado = "Agotado"
         else:
             self.Estado = "Intoxicado"
 
-    # Si retorna 1 significa que tiene que abandonar una ronda la pega, si retorna 0 sigue trabajando
+    # Llamar cada ronda, Si retorna 1 significa que tiene que abandonar una ronda la pega, si retorna 0 sigue trabajando
     def Agotado(self):
         if(self.Estado == "Agotado"):
             self.RecargarResistencia(self,30)
             return 1
         return 0
     
-    # Si retorna 1 matar hebra si retorna 0 sigue trabajando
+    # LLamar cada ronda,Si retorna 1 matar hebra si retorna 0 sigue trabajando
     def Intoxicado(self):
         if(self.Estado == "Intoxicado"):
             return 1
