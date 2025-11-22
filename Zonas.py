@@ -6,12 +6,16 @@ class Zonas:
        
        self.Cristales = Cristales
        self.Trabajadores = 0
+       self.clima = random.randint(10,50)
     
     def getCristales(self):
         return self.Cristales
     
     def getTrabajadores(self):
         return self.Trabajadores
+    
+    def getToxicidad(self):
+        return self.clima
     
     # Si retorna 0 no puedes agregar un trabajador
     def UnirTrabajador(self):

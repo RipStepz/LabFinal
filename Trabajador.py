@@ -47,26 +47,24 @@ class Trabajador:
         else:
             self.Mochila += cristales
     
-    def Accion(self, Cristales_A_Recolectar):
+    def Accion(self, Cristales_A_Recolectar,Toxicidad,TrabajadoresEnZona ):
         if (Cristales_A_Recolectar == 1):
             self.Resistencia -= 5
         elif(Cristales_A_Recolectar):
             self.Resistencia -= 12
         else:
             self.Resistencia -= 20
+        self.Resistencia -= self.Exposicion(Toxicidad, TrabajadoresEnZona)
         return Cristales_A_Recolectar
     
     # Los cristales recolectados se retornan para quitarlos de la zona
-    def Recolectar(self, Cristales_A_Recolectar):
+    def Recolectar(self, Cristales_A_Recolectar, Toxicidad,TrabajadoresEnZona):
 
-        CristalesRecolectados = self.Accion(self, Cristales_A_Recolectar)
+        CristalesRecolectados = self.Accion(Cristales_A_Recolectar,Toxicidad,TrabajadoresEnZona)
         
         self.Mochila += CristalesRecolectados
         self.CristalesExtraidosTotales += CristalesRecolectados
         return CristalesRecolectados
-
-    def Exposicion(self, Toxicidad, TrabajadoresEnZona):
-        return Toxicidad/TrabajadoresEnZona
 
     # Si retorna 1, se comparte, caso contrario no se puede
     def compartir(self):
@@ -102,3 +100,6 @@ class Trabajador:
         if(self.Estado == "Intoxicado"):
             return 1
         return 0
+    
+    def Exposicion(self, Toxicidad, TrabajadoresEnZona):
+        return Toxicidad/TrabajadoresEnZona
