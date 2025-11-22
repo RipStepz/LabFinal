@@ -75,6 +75,7 @@ class Trabajador:
     def recibir(self, Aceptado):
         if (Aceptado):
             self.AunmentarCristal(self, 3)
+            self.Resistencia += 15
         else:
             pass
     #llamar cada ronda
