@@ -10,13 +10,12 @@ class Trabajador:
     int CristalesExtraidosTotales Historial de cristales extraidos por la hebra
     String ZonasVisitadas es una lista de strings con las zonas visitadas por la hebra
     int RondasTrabajadas contador de rondas trabajadas por la hebra
-
     """
 
-    def __init__(self, Resistencia , Mochila):
+    def __init__(self, Mochila):
        
         #condiciones iniciales
-        self.Resistencia = Resistencia 
+        self.Resistencia = 100
         self.Mochila = Mochila
         self.Estado = "Activo"
 

@@ -23,7 +23,7 @@ def main():
     print()
 
     # 2) Crear algunos trabajadores (por ejemplo 8), con condiciones iniciales
-    trabajadores = [Trabajador(100, 0) for _ in range(8)]
+    trabajadores = [Trabajador(0) for _ in range(8)]
 
     print("Trabajadores iniciales:")
     for i, t in enumerate(trabajadores):
